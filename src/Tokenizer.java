@@ -40,6 +40,8 @@ class Tokenizer {
 
         this.tokens = new ArrayList<>();
         this.tokens = tokenize();
+        printTokens();
+        printSymbolTable();
     }
 
     public List<Token> tokenize() {
@@ -126,6 +128,8 @@ class Tokenizer {
                 // sadness ye unknown
                 else {
                     tokens.add(new Token("UNKNOWN", word));
+                    System.out.println("\u001B[31mError: Unknown token encountered -> " + String.valueOf(current) + "\u001B[0m");
+                    return null;
                 }
                 continue;
             }
@@ -170,9 +174,9 @@ class Tokenizer {
 
             // unknown for jo na pata ho
             tokens.add(new Token("UNKNOWN", String.valueOf(current)));
-            index++;
+            System.out.println("\u001B[31mError: Unknown token encountered -> " + String.valueOf(current) + "\u001B[0m");
+            return null;
         }
-
         return tokens;
     }
 
@@ -211,8 +215,32 @@ class Tokenizer {
     }
 
     public void printTokens() {
+        if(tokens == null)
+            return;
+        System.out.println("\nTokenized Code:");
         for (Token token : tokens) {
             System.out.println("[" + token.type + ": " + token.value + "]");
         }
     }
+
+    public void printSymbolTable() {
+        if(tokens == null)
+            return;
+        System.out.println("\n--------------------------------");
+        System.out.println("          SYMBOL TABLE          ");
+        System.out.println("--------------------------------");
+        System.out.printf("%-15s | %-15s\n", "TYPE", "VALUE");
+        System.out.println("--------------------------------");
+
+        Map<String, Token> aklotay = new HashMap<>();
+
+        for (Token token : tokens) {
+            aklotay.put(token.toString(), token);
+        }
+
+        for (Token token : aklotay.values()) {
+            System.out.printf("%-15s | %-15s\n", token.type, token.value);
+        }
+    }
+
 }
