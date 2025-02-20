@@ -1,0 +1,10 @@
+$$ ye mera sample code hai
+dec x = 12.34;
+in(x);
+$$ single-line comment
+x = x + 5;
+${ multi-line
+   comment }$
+out("Value:", x, "\n");
+bin val = true;
+out("Value:", x)
